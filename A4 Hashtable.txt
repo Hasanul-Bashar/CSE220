@@ -1,0 +1,164 @@
+#Lab 4 - Secondary Data Structures:
+
+#Task-1: [Searching in Hashtable]
+
+  def __hash_function(self, key):
+    k=key
+    sum=0
+    if len(k)%2!=0:
+        k+="N"
+    for i in range(0,len(k)-1,2):
+        sum+=int(str(ord(k[i]))+str(ord(k[i+1])))
+
+    idx=sum%len(self.ht)
+    sum=0
+
+    return idx
+
+
+  def search_hashtable(self, s):
+    idx=self.__hash_function(s[0])
+    new=self.ht[idx]
+
+    while new!=None:
+        if new.key==s[0]:
+            return "Found"
+        else:
+            new=new.next
+    return "Not Found"
+
+#Task-2: [Hashtable with Forward Chaining]
+
+  def __hash_function(self, key):
+    k=key
+    sum=0
+
+    if len(k)%2==0:
+        for i in range(len(k)):
+            if i%2==0:
+                sum+=ord(k[i])
+        return sum%self.length
+    else:
+
+        for j in range(len(k)):
+            if j%2!=0:
+                sum+=ord(k[j])
+        return sum%self.length
+
+
+
+  def insert(self, key, value):
+    idx=self.__hash_function(key)
+    nn=Node((key,value))
+    if self.ht[idx].value==None:
+        self.ht[idx]=nn
+    else:
+        temp=self.ht[idx]
+
+        if temp.value[0]==key:
+            self.ht[idx].value=(key,value)
+        else:
+            while temp is not None:
+                if temp.value[1]<value:
+                    nn.next=temp
+                    self.ht[idx]=nn
+                    break
+                else:
+                    new=temp.next
+                    nn.next=new
+                    temp.next=nn
+                    break
+
+#Task-3: [Deletion from Hashtable]
+
+  def __hash_function(self, key):
+
+    idx=(key+3)%len(self.ht)
+    return idx
+
+
+
+
+  def remove(self, key):
+    
+    idx=self.__hash_function(key)
+    new=self.ht[idx]
+    flag=True
+    last=None
+    while new is not None:
+        if new.key==key:
+            if flag==True:
+                last=new.next
+                self.ht[idx]=last
+                break
+            else:
+                last.next=new.next
+                break
+        else:
+            flag=False
+            last=new
+            new=new.next
+
+#Task-4: [Diamond Count]
+
+def diamond_count(stack,string):
+    num=0
+    for i in range(len(string)):
+        if string[i]=="<":
+            stack.push(string[i])
+        elif string[i]=='>'  and not stack.isEmpty():
+            stack.pop()
+            num+=1
+
+    return num
+
+#Task-5: [Tower of Blocks]
+
+def remove_block(stack, n):
+    new=Stack()
+    for i in range(n-1):
+        new.push(stack.pop())
+    stack.pop()
+    while not new.isEmpty():
+        stack.push(new.pop())
+
+    return stack
+#Task-6: [Stack Reverse]
+
+def conditional_reverse(stack):
+    new=Stack()
+    temp=None
+    while not stack.isEmpty():
+        curr=stack.pop()
+        if curr!=temp:
+            new.push(curr)
+            temp=curr
+    return new
+
+#Task-7: [Customer Service Call Center] 
+
+    def enqueue_call(self, customer_id, is_vip):
+        if is_vip==True:
+          self.vip_queue.enqueue(customer_id)
+          print(f"Customer {customer_id} added to VIP queue.")
+        else:
+          self.regular_queue.enqueue(customer_id)
+          print(f"Customer {customer_id} added to Regular queue.")
+
+    def dequeue_call(self):
+        if not self.vip_queue.is_empty():
+          print(f"Processing VIP Customer {self.vip_queue.peek()}.")
+          self.vip_queue.dequeue()
+        else:
+          if not self.regular_queue.is_empty():
+            print(f"Processing Regular Customer {self.regular_queue.peek()}.")
+            self.regular_queue.dequeue()
+          else:
+            print("No calls in the queue.")
+
+    def display_queue(self):
+        print("VIP Queue:")
+        self.vip_queue.display_queue()
+        print("Regular Queue:")
+        self.regular_queue.display_queue()
+

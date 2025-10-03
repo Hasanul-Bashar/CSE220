@@ -1,0 +1,181 @@
+Singly link list
+#task1
+def alternate_merge(head1, head2):
+    final=head1
+    h1=head1
+    h2=head2
+    nn1=h1.next
+    nn2=h2.next
+    while head1.next!=None:
+        h1.next=h2
+        h2.next=nn1
+        h1=nn1
+        h2=nn2
+        if nn1==None or nn2==None:
+            break
+        nn1=nn1.next
+        nn2=nn2.next
+    return final
+#task2
+def word_Decoder(head):
+    prime=head
+    count=1
+    h1=head.next
+    final=Node(None)
+
+    newh1=Node(None)
+
+    while h1!=None:
+        count+=1
+        h1=h1.next
+    num=13 % count
+    a=num
+   
+    for i in range(1,count):
+        
+        prime=prime.next
+        
+        if i%num==0:
+            if num==a:
+                newh1=Node(prime.elem)
+                nn=newh1
+
+            else:
+                nn.next=Node(prime.elem)
+                nn=nn.next
+
+            a+=num
+#task3
+def idGenerator(head1, head2, head3):
+    h1=head1
+    rev=Node(h1.elem)
+    temp1=head1.next
+    while temp1!=None:
+        nn1=Node(temp1.elem)
+        nn1.next=rev
+        rev=nn1
+        temp1=temp1.next
+    
+    h2=head2
+    h3=head3
+    nh1=rev
+    tail1=nh1
+    
+    while tail1.next!=None:
+        tail1=tail1.next
+    
+
+    while h2!=None and h3!=None:
+        sum=h2.elem+h3.elem
+        if sum>=10:
+            sum=sum%10
+            new=Node(sum)
+            tail1.next=new
+            tail1=tail1.next
+        else:
+            new=Node(sum)
+            tail1.next=new
+            tail1=tail1.next
+        h2=h2.next
+        h3=h3.next
+    return nh1
+
+#doubly
+#task4
+class WRM:
+
+  def __init__(self):
+    #Creating the dummy head
+    self.dh = Patient(None,None,None,None,None,None)
+    self.dh.next = self.dh
+    self.dh.prev = self.dh
+
+  def registerPatient(self,id, name, age, bloodgroup):
+    newp=Patient(id, name, age, bloodgroup, None, None)
+    if self.dh.next==self.dh:
+        self.dh.next=newp
+        newp.next=self.dh
+        self.dh.prev=newp
+        newp.prev=self.dh
+        print("Patient successfully registered")
+    else:
+        newp.next=self.dh
+        self.dh.prev.next=newp
+        self.dh.prev=newp
+
+  def servePatient(self):
+    if self.dh.next==self.dh:
+        print("No patient")
+    else:
+        currP=self.dh.next
+        self.dh.next=currP.next
+        currP.next.prev=self.dh
+        print(f"Current Patient {currP.name}")
+
+  def showAllPatient(self):
+    currP=self.dh.next
+    if currP==self.dh:
+        print("No patient!")
+    else:
+        while currP!=self.dh:
+            print(f'Patient name: {currP.name}')
+            currP=currP.next
+
+
+  def canDoctorGoHome(self):
+    if self.dh.next==self.dh:
+        print("Doctor can go home")
+    else:
+        print("Doctor can't go home")
+
+  def cancelAll(self):
+    self.dh.next=self.dh
+    self.dh.prev=self.dh
+    print("All appointment are canceled!")
+
+  def ReverseTheLine(self):
+    if self.dh.next == self.dh:
+      print("No patient")
+    else:
+        curr = self.dh
+        while True:
+            curr.next, curr.prev = curr.prev, curr.next
+            curr = curr.prev
+            if curr == self.dh:
+                break
+        print("Line reversed successfully")
+
+#Tester Code 
+print("**Welcome to Waiting Room Management System**")
+Tester = WRM()
+while True:
+  print("\nChoose an Option:")
+  print("1. Register Patient")
+  print("2. Serve Patient")
+  print("3. Show All Patients")
+  print("4. Can Doctor Go Home")
+  print("5. Cancel All")
+  print("6. Reverse The Line")
+  print("7. Exit")
+  opt = int(input("Enter your choice: "))
+  if opt==1:
+    id=int(input("Enter ID: "))
+    name=input("Enter Name: ")
+    age=int(input("Enter Age: "))
+    bloodgroup=input("Enter Blood Group: ")
+    Tester.registerPatient(id,name,age,bloodgroup)
+  elif opt==2:
+    Tester.servePatient()
+  elif opt==3:
+    Tester.showAllPatient()
+  elif opt==4:
+    Tester.canDoctorGoHome()
+  elif opt==5:
+    Tester.cancelAll()
+  elif opt==6:
+    Tester.reverseTheLine()
+  elif opt==7:
+    print("Thank You!")
+    break
+  else:
+    print("Invalid option!")

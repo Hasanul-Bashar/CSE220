@@ -1,0 +1,165 @@
+##LAB 3 : 2D Matrix##
+
+# Task 01: Zigzag Walk
+
+def walk_zigzag(floor):
+    m1=floor
+    row=len(m1)
+    col=len(m1[0])
+    
+    for i in range(col):
+        if i%2==0:
+            for j in range(0,row,2):
+                print(m1[j][i], end=" ")
+            print()
+        
+        else:
+            for k in range(row-1,0,-1):
+                if k%2!=0:
+                    print(m1[k][i], end=" ")
+            print()
+
+
+#Task 02: Decryption Process
+
+def decrypt_matrix(matrix):
+    row=len(matrix)
+    col=len(matrix[0])
+    arr=np.array([0]*(col-1))
+    sum1=0
+    sum2=0
+
+    for i in range(col-1):
+        for j in range(row):
+            sum1+=matrix[j][i]
+            sum2+=matrix[j][i+1]
+
+        arr[i]=sum2-sum1
+        sum1=0
+        sum2=0
+
+    return arr
+
+# Task 03: Row Rotation Policy of BRACU Classroom
+
+def row_rotation(exam_week, seat_status):
+    num=exam_week
+    mat1=seat_status
+    row=len(mat1)
+    col=len(mat1[0])
+    new=np.zeros((row,col),dtype=object)
+
+    for i in range(row):
+        for j in range(col):
+            new[((i+num-1)%row)][j] = mat1[i][j]
+   
+    print_matrix(new)
+    for j in range(row):
+        for k in range(col):
+            if new[j][k]=="AA":
+                return j+1
+
+#Task 04: Matrix Compression
+
+def compress_matrix(mat):
+    row=len(mat)
+    col=len(mat[0])
+
+    arr=np.array([[0]*int(col/2)]*(row/2))
+    sum=0
+
+    for i in range(0,row,2):
+        for j in range(0,col,2):
+            sum+=mat[i][j]
+            sum+=mat[i+1][j+1]
+            sum+=mat[i][j+1]
+            sum+=mat[i+1][j]
+            a=j
+            arr[int(i/2)][int(j/2)]=sum
+            sum=0
+    return arr
+
+#Task 05: Game Arena
+
+def play_game(arena):
+    point=0
+    m1=arena
+    row=len(m1)
+    col=len(m1[0])
+    sum=0
+    for i in range(row):
+        for j in range(col):
+            if m1[i][j]%50==0 and m1[i][j]!=0:
+
+                if i==0 and j==0:
+                    if m1[i][j+1]==2:
+                        sum+=m1[i][j+1]
+
+                    if m1[i+1][j]==2:
+                        sum+=m1[i+1][j]
+
+                elif i==row-1 and j==0:
+                    if m1[i-1][j]==2:
+                        sum+=m1[i-1][j]
+                    if m1[i][j+1]==2:
+                        sum+=m1[i][j+1]
+
+                elif i==row-1 and j==col-1:
+                    if m1[i-1][j]==2:
+                        sum+=m1[i-1][j]
+                    if m1[i][j-1]==2:
+                        sum+=m1[i][j-1]
+
+                elif i==0 and j==col-1:
+                    if m1[i+1][j]==2:
+                        sum+=m1[i+1][j]
+                    if m1[i][j-1]==2:
+                        sum+=m1[i][j-1]
+
+                elif j==0 and (i!=0 or i!=row-1):
+                    if m1[i-1][j]==2:
+                        sum+=m1[i-1][j]
+                    if m1[i+1][j]==2:
+                        sum+=m1[i+1][j]
+                    if m1[i][j+1]==2:
+                        sum+=m1[i][j+1]
+
+                elif i==0 and (j!=0 or j!=col-1):
+                    if m1[i][j-1]==2:
+                        sum+=m1[i][j-1]
+                    if m1[i][j+1]==2:
+                        sum+=m1[i][j+1]
+                    if m1[i+1][j]==2:
+                        sum+=m1[i+1][j]
+
+                elif i==row-1 and (j!=0 or j!=col-1):
+                    if m1[i-1][j]==2:
+                        sum+=m1[i-1][j]
+                    if m1[i][j-1]==2:
+                        sum+=m1[i][j-1]
+                    if m1[i][j+1]==2:
+                        sum+=m1[i][j+1]
+
+                elif j==col-1 and (i!=0 or i!=row-1):
+                    if m1[i-1][j]==2:
+                        sum+=m1[i-1][j]
+                    if m1[i+1][j]==2:
+                        sum+=m1[i+1][j]
+                    if m1[i][j-1]==2:
+                        sum+=m1[i][j-1]
+
+                else:
+                    if m1[i-1][j]==2:
+                        sum+=m1[i-1][j]
+                    if m1[i+1][j]==2:
+                        sum+=m1[i+1][j]
+                    if m1[i][j-1]==2:
+                        sum+=m1[i][j-1]
+                    if m1[i][j+1]==2:
+                        sum+=m1[i][j+1]
+
+    if sum<10:
+        print(f"Points Gained: {sum}. Your team is out.")
+    else:
+        print(f"Points Gained: {sum}. Your team has survived the game.")
+

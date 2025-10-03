@@ -1,0 +1,625 @@
+#Lab-09
+
+#task1.1
+ import numpy as np
+arr=np.array(["A","B","C","D","E","F","G"])
+
+def unweighted_mat_graph(arr):
+    a=len(arr)
+    mat=np.zeros((a,a),dtype=int)
+    
+    mat[0][1]=1
+    mat[0][4]=1
+    mat[0][5]=1
+    mat[0][6]=1
+
+    mat[1][0]=1
+    mat[1][2]=1
+    mat[1][3]=1
+    mat[1][4]=1
+    mat[1][6]=1
+
+    mat[2][1]=1
+    mat[2][3]=1
+    mat[2][6]=1
+
+    mat[3][1]=1
+    mat[3][2]=1
+    mat[3][4]=1
+    mat[3][5]=1
+    mat[3][6]=1
+
+    mat[4][0]=1
+    mat[4][1]=1
+    mat[4][3]=1
+    mat[4][5]=1
+    mat[4][6]=1
+
+    mat[5][0]=1
+    mat[5][3]=1
+    mat[5][4]=1
+    mat[5][6]=1
+
+    mat[6][0]=1
+    mat[6][1]=1
+    mat[6][2]=1
+    mat[6][3]=1
+    mat[6][4]=1
+    mat[6][5]=1
+    
+    return mat
+
+
+def max_degree(arr,mat):
+    max=0
+    ind=0
+    deg=0
+    for i in range(len(mat)):
+        deg=0
+        for j in range(len(mat)):
+            if mat[i][j]!=0:
+                deg+=mat[i][j]
+        if deg>max:
+            max=deg
+            ind=i
+        
+    return f"Vertex {arr[ind]} has max degree of {max}"
+
+test=unweighted_mat_graph(arr)
+print(test)
+print(max_degree(arr,test))
+
+#task 1.2
+
+import numpy as np
+arr = np.array(['A','B','C','D','E','F','G'])
+class Node:
+    def __init__(self,elem,next = None):
+        self.ver,self.next = elem,next
+
+def unweighted_list_graph(arr):
+    new_lis = [None]*len(arr)
+    for i in range(len(arr)):
+        new_lis[i] = Node(arr[i])
+
+    a=new_lis[0]
+    b=a.next=Node("B")
+    c=b.next=Node("E")
+    d=c.next=Node("F")
+    e=d.next=Node("G")
+
+    f=new_lis[1]
+    g=f.next=Node("A")
+    h=g.next=Node("C")
+    i=h.next=Node("D")
+    j=i.next=Node("E")
+    k=j.next=Node("G")
+
+    l=new_lis[2]
+    m=l.next=Node("B")
+    n=m.next=Node("D")
+    o=n.next=Node("G")
+
+    p=new_lis[3]
+    q=p.next=Node("B")
+    r=q.next=Node("C")
+    s=r.next=Node("E")
+    t=s.next=Node("F")
+    u=t.next=Node("G")
+
+    v=new_lis[4]
+    w=v.next=Node("A")
+    x=w.next=Node("B")
+    y=x.next=Node("D")
+    z=y.next=Node("F")
+    a1=z.next=Node("G")
+    
+    a2=new_lis[5]
+    a3=a2.next=Node("A")
+    a4=a3.next=Node("D")
+    a5=a4.next=Node("E")
+    a6=a5.next=Node("G")
+
+    a7=new_lis[6]
+    a8=a7.next=Node("A")
+    a9=a8.next=Node("B")
+    b1=a9.next=Node("C")
+    b2=b1.next=Node("D")
+    b3=b2.next=Node("E")
+    b4=b3.next=Node("F")
+
+    return new_lis
+
+def print_list(arr):
+    for i in range(len(arr)):
+        temp = arr[i]
+        while temp != None:
+            print(temp.ver, end = "->")
+            temp = temp.next
+        print()
+
+def max_degree(arr):
+    max=0
+    ind=0
+    deg=0
+    for i in range(len(arr)):
+        deg=0
+        temp=arr[i]
+        while temp.next!=None:
+            deg+=1
+            temp=temp.next
+        if deg>max:
+            max=deg
+            ind=i
+    return  f"Vertex {arr[ind].ver} has max degree of {max}"
+
+test=unweighted_list_graph(arr)
+print_list(test)
+print(max_degree(test))
+
+
+#task 2.1
+
+import numpy as np
+arr = np.array(['A','B','C','D','E','F','G'])
+
+def weighted_list_graph(arr):
+    a=len(arr)
+    mat=np.zeros((a,a),dtype=int)
+    
+    mat[0][1]=5
+    mat[0][4]=45
+    mat[0][5]=70
+    mat[0][6]=20
+
+    mat[1][0]=5
+    mat[1][2]=10
+    mat[1][3]=80
+    mat[1][4]=75
+    mat[1][6]=15
+
+    mat[2][1]=10
+    mat[2][3]=65
+    mat[2][6]=25
+
+    mat[3][1]=80
+    mat[3][2]=65
+    mat[3][4]=85
+    mat[3][5]=60
+    mat[3][6]=40
+
+    mat[4][0]=45
+    mat[4][1]=75
+    mat[4][3]=85
+    mat[4][5]=50
+    mat[4][6]=30
+
+    mat[5][0]=70
+    mat[5][3]=60
+    mat[5][4]=50
+    mat[5][6]=35
+
+    mat[6][0]=20
+    mat[6][1]=15
+    mat[6][2]=25
+    mat[6][3]=40
+    mat[6][4]=30
+    mat[6][5]=35
+    
+    return mat
+
+
+def max_sum(arr,mat):
+    max=0
+    ind=0
+    deg=0
+    for i in range(len(mat)):
+        deg=0
+        for j in range(len(mat)):
+            if mat[i][j]!=0:
+                deg+=mat[i][j]
+        
+        if deg>max:
+            max=deg
+            ind=i
+        
+    return f"Vertex {arr[ind]} has max sum of {max}"
+
+test=weighted_list_graph(arr)
+print(test)
+print(max_sum(arr,test))
+
+
+#task 2.2
+
+import numpy as np
+arr = np.array(['A','B','C','D','E','F','G'])
+
+class Node:
+    def __init__(self,elem,w=0,next = None):
+        self.ver,self.next,self.weight = elem,next,w
+
+
+def weighted_list_graph(arr):
+    new_lis = [None]*len(arr)
+    for i in range(len(arr)):
+        new_lis[i] = Node(arr[i])
+
+    
+    a=new_lis[0]
+    b=a.next=Node("B",5)
+    c=b.next=Node("E",45)
+    d=c.next=Node("F",70)
+    e=d.next=Node("G",20)
+
+    f=new_lis[1]
+    g=f.next=Node("A",5)
+    h=g.next=Node("C",10)
+    i=h.next=Node("D",80)
+    j=i.next=Node("E",75)
+    k=j.next=Node("G",15)
+
+    l=new_lis[2]
+    m=l.next=Node("B",10)
+    n=m.next=Node("D",65)
+    o=n.next=Node("G",25)
+
+    p=new_lis[3]
+    q=p.next=Node("B",80)
+    r=q.next=Node("C",65)
+    s=r.next=Node("E",85)
+    t=s.next=Node("F",60)
+    u=t.next=Node("G",40)
+
+    v=new_lis[4]
+    w=v.next=Node("A",45)
+    x=w.next=Node("B",75)
+    y=x.next=Node("D",85)
+    z=y.next=Node("F",50)
+    a1=z.next=Node("G",30)
+    
+    a2=new_lis[5]
+    a3=a2.next=Node("A",70)
+    a4=a3.next=Node("D",60)
+    a5=a4.next=Node("E",50)
+    a6=a5.next=Node("G",35)
+
+    a7=new_lis[6]
+    a8=a7.next=Node("A",20)
+    a9=a8.next=Node("B",15)
+    b1=a9.next=Node("C",25)
+    b2=b1.next=Node("D",40)
+    b3=b2.next=Node("E",30)
+    b4=b3.next=Node("F",35)
+
+    return new_lis
+
+
+def print_list(arr):
+    for i in range(len(arr)):
+        temp = arr[i]
+        while temp != None:
+            print(temp.ver, end = "->")
+            temp = temp.next
+        print()
+
+
+def max_sum(arr):
+    max=0
+    ind=0
+    deg=0
+    for i in range(len(arr)):
+        deg=arr[i].weight
+        temp=arr[i]
+        while temp!=None:
+            deg+=temp.weight
+            temp=temp.next
+        if deg>max:
+            max=deg
+            ind=i
+    return  f"Vertex {arr[ind].ver} has max sum of {max}"
+
+test=weighted_list_graph(arr)
+print_list(test)
+
+print(max_sum(test))
+
+#task 3.1
+
+import numpy as np
+arr = np.array(['A','B','C','D','E','F','G'])
+def directed_weighted_mat_graph(arr):
+    
+    a=len(arr)
+    mat=np.zeros((a,a),dtype=int)
+    
+    mat[0][1]=5
+    mat[0][4]=45
+    mat[0][5]=70
+    mat[0][6]=20
+
+    mat[1][2]=10
+    mat[1][3]=80
+    mat[1][4]=75
+    mat[1][6]=15
+
+    mat[2][3]=65
+    mat[2][6]=25
+
+    mat[3][4]=85
+    mat[3][5]=60
+    mat[3][6]=40
+
+    mat[4][5]=50
+    mat[4][6]=30
+
+    mat[5][6]=35
+
+    return mat
+
+def max_degree(arr,mat):
+    max=0
+    ind=[]
+    deg=0
+    new=""
+    for i in range(len(mat)):
+        deg=0
+        for j in range(len(mat)):
+            if mat[i][j]!=0:
+                deg+=1
+        if deg>=max:
+            max = deg
+            ind+=arr[i]
+            
+    for k in range(len(ind)):
+        if k!=len(ind)-1:
+            new+=ind[k]+","
+        else:
+            new+=ind[k]
+
+    return f"Vertex {new} has max degree of {max}"
+def max_sum(arr,mat):
+    max=0
+    ind=0
+    deg=0
+    for i in range(len(mat)):
+        deg=0
+        for j in range(len(mat)):
+            if mat[i][j]!=0:
+                deg+=mat[i][j]
+        
+        if deg>max:
+            max=deg
+            ind=i
+        
+    return f"Vertex {arr[ind]} has max sum of {max}"
+
+
+test=directed_weighted_mat_graph(arr)
+print(test)
+print(max_degree(arr,test))
+
+test=directed_weighted_mat_graph(arr)
+print(test)
+print(max_sum(arr,test))
+
+
+# task 3.2
+
+import numpy as np
+arr = np.array(['A','B','C','D','E','F','G'])
+
+class Node:
+    def __init__(self,elem,w=0,next = None):
+        self.ver,self.next,self.weight = elem,next,w
+
+
+def direct_weighted_list_graph(arr):
+    new_lis = [None]*len(arr)
+    for i in range(len(arr)):
+        new_lis[i] = Node(arr[i])
+
+    
+    a=new_lis[0]
+    b=a.next=Node("B",5)
+    c=b.next=Node("E",45)
+    d=c.next=Node("F",70)
+    e=d.next=Node("G",20)
+
+    f=new_lis[1]
+    h=f.next=Node("C",10)
+    i=h.next=Node("D",80)
+    j=i.next=Node("E",75)
+    k=j.next=Node("G",15)
+
+    l=new_lis[2]
+    n=l.next=Node("D",65)
+    o=n.next=Node("G",25)
+
+    p=new_lis[3]
+    s=p.next=Node("E",85)
+    t=s.next=Node("F",60)
+    u=t.next=Node("G",40)
+
+    v=new_lis[4]
+    z=v.next=Node("F",50)
+    a1=z.next=Node("G",30)
+    
+    a2=new_lis[5]
+    a6=a2.next=Node("G",35)
+
+    return new_lis
+
+
+
+def print_list(arr):
+    for i in range(len(arr)):
+        temp = arr[i]
+        while temp != None:
+            print(temp.ver, end = "->")
+            temp = temp.next
+        print()
+
+def max_degree(arr):
+    max=0
+    ind=[]
+    deg=0
+    new=""
+    for i in range(len(arr)):
+        deg=0
+        temp=arr[i]
+        while temp.next!=None:
+            deg+=1
+            temp=temp.next
+        if deg>max:
+            max=deg
+            ind+=arr[i].ver
+    for k in range(len(ind)):
+        if k!=len(ind)-1:
+            new+=ind[k]+","
+        else:
+            new+=ind[k]
+
+    return  f"Vertex {new} has max degree of {max}"
+
+
+def max_sum(arr):
+    max=0
+    ind=0
+    deg=0
+    for i in range(len(arr)):
+        deg=arr[i].weight
+        temp=arr[i]
+        while temp!=None:
+            deg+=temp.weight
+            temp=temp.next
+        if deg>max:
+            max=deg
+            ind=i
+    return  f"Vertex {arr[ind].ver} has max sum of {max}"
+
+
+test=direct_weighted_list_graph(arr)
+print_list(test)
+print(max_degree(test))
+
+test=direct_weighted_list_graph(arr)
+print_list(test)
+print(max_sum(test))
+
+
+# task 4.1 
+import numpy as np
+arr = np.array(['A','B','C','D','E','F','G'])
+def directed_weighted_mat_graph(arr):
+    
+    a=len(arr)
+    mat=np.zeros((a,a),dtype=int)
+    
+    mat[0][1]=5
+    mat[0][4]=45
+    mat[0][5]=70
+    mat[0][6]=20
+
+    mat[1][2]=10
+    mat[1][3]=80
+    mat[1][4]=75
+    mat[1][6]=15
+
+    mat[2][3]=65
+    mat[2][6]=25
+
+    mat[3][4]=85
+    mat[3][5]=60
+    mat[3][6]=40
+
+    mat[4][5]=50
+    mat[4][6]=30
+
+    mat[5][6]=35
+
+    return mat
+
+def graph_conversion(mat):
+    a=len(mat)
+    for i in range(a):
+        for j in range(i, a):
+            if mat[i][j]!=0 or mat[j][i]!=0:
+                if mat[i][j]>=mat[j][i]:
+                    w8=mat[i][j]
+                    mat[j][i]=w8
+                else:
+                    w8=mat[j][i]
+                    mat[i][j]=w8
+                
+    return mat
+
+test=directed_weighted_mat_graph(arr)
+print(test)
+print("-"*25)
+print(graph_conversion(test))
+
+# task 4.2
+import numpy as np
+arr = np.array(['A','B','C','D','E','F','G'])
+
+class Node:
+    def __init__(self,elem,w=0,next = None):
+        self.ver,self.next,self.weight = elem,next,w
+
+
+def direct_weighted_list_graph(arr):
+    new_lis = [None]*len(arr)
+    for i in range(len(arr)):
+        new_lis[i] = Node(arr[i])
+
+
+    a=new_lis[0]
+    b=a.next=Node("B",5)
+    c=b.next=Node("E",45)
+    d=c.next=Node("F",70)
+    e=d.next=Node("G",20)
+
+    f=new_lis[1]
+    h=f.next=Node("C",10)
+    i=h.next=Node("D",80)
+    j=i.next=Node("E",75)
+    k=j.next=Node("G",15)
+
+    l=new_lis[2]
+    n=l.next=Node("D",65)
+    o=n.next=Node("G",25)
+
+    p=new_lis[3]
+    s=p.next=Node("E",85)
+    t=s.next=Node("F",60)
+    u=t.next=Node("G",40)
+
+    v=new_lis[4]
+    z=v.next=Node("F",50)
+    a1=z.next=Node("G",30)
+
+    a2=new_lis[5]
+    a6=a2.next=Node("G",35)
+
+    return new_lis
+
+def print_list(arr):
+    for i in range(len(arr)):
+        temp = arr[i]
+        while temp != None:
+            print(temp.ver, end = "->")
+            temp = temp.next
+        print()
+def directed_to_undirected_weighted_list(mat,arr):
+    new_lis = [None]*len(arr)
+    for i in range(len(arr)):
+        new_lis[i] = Node(arr[i])
+
+
+
+test=direct_weighted_list_graph(arr)
+print_list(test)
+
+
+print(directed_to_undirected_weighted_list(test,arr))

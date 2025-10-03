@@ -1,0 +1,71 @@
+ #Lab 7 - Binary Search Tree
+
+#Task 1
+def LCA(root, x, y):
+    if root==None:
+        return None
+
+    elif root.elem<x and root.elem<y:
+        return LCA(root.right,x,y)
+
+    elif root.elem>x and root.elem>y:
+        return LCA(root.left,x,y)
+
+    elif (root.elem<x and root.elem>y) or (root.elem>x and root.elem<y):
+        return root.elem
+
+    elif root.elem==x or root.elem==y:
+        return root.elem
+
+#Task 2
+def helper1(root,key,path):
+    if root==None:
+        return None
+    else:
+        
+        if root.elem==key:
+            path.append(root.elem)
+            return True
+        elif root.elem<key:
+            path.append(root.elem)
+            return helper1(root.right,key,path)
+        elif root.elem>key:
+            path.append(root.elem)
+            return helper1(root.left,key,path)
+
+def find_path(root, key):
+    path=[]
+    
+    if root==None:
+        return None
+    else:
+        
+        if helper1(root,key,path)==True:
+            return path
+        else:
+            return "No Path Found"
+           
+#Task 3
+def sum_of_leaves(root, sum):
+    if root==None:
+        return sum
+    elif root.left==None and root.right==None:
+        sum+=root.elem
+        return sum
+    else:
+        return sum+sum_of_leaves(root.left, sum)+sum_of_leaves(root.right, sum)
+
+#Task 4
+def mirror_sum(root):
+    if root==None:
+        return 0
+    return helper2(root.left,root.right)
+
+
+def helper2(rootleft,rootright):
+    num=0
+    if rootleft==None or rootright==None:
+        return 0
+    else:
+        num=rootleft.elem+rootright.elem
+        return num+helper2(rootleft.left,rootright.right)+helper2(rootleft.right,rootright.left)

@@ -1,0 +1,106 @@
+##Lab 6 - Binary Tree##
+
+#Task 1
+def convert_mirror(root):
+    if root == None:
+        return
+    else:
+        lr=convert_mirror(root.left)
+        rr=convert_mirror(root.right)
+        root.left=rr
+        root.right=lr
+        return root
+
+
+#Task 2
+def smallest_level(root, level = {}, i = 0):
+    if root==None:
+        return level
+
+    else:
+        if i not in level:
+            level[i]=root.elem
+
+        elif level[i] > root.elem:
+            level[i]=root.elem
+
+
+    smallest_level(root.right, level, i+1)
+    smallest_level(root.left, level, i+1)
+    return level
+
+#Task 3
+def sumTree(root):
+    return helper1(root,0)
+
+def helper1(nn,lvl):
+    if nn==None:
+        return 0
+
+    if lvl==0:
+        val=nn.elem
+        n1=helper1(nn.right,lvl+1)
+        n2=helper1(nn.left,lvl+1)
+        return val+n1+n2
+
+    else:
+        val=nn.elem%lvl
+        n1=helper1(nn.right,lvl+1)
+        n2=helper1(nn.left,lvl+1)
+        return val+n1+n2
+
+#task 4
+def swap_child(root,level,M):
+    if root == None:
+        return 
+
+    elif level<M:
+        swap(root)
+
+    swap_child(root.left,level+1,M)
+    swap_child(root.right,level+1,M)
+    return root
+
+def swap(root):
+    if root == None:
+        return
+    else:
+        lr=root.left
+        rr=root.right
+        root.left=rr
+        root.right=lr
+        return root
+
+#Task 5
+def subtract_summation(root):
+    if root==None:
+        return
+    else:
+        new=helper2(root.left)-helper2(root.right)
+        return new
+
+def helper2(root):
+    num=0
+    if root==None:
+        return 0
+    else:
+        num=root.elem+helper2(root.right)+helper2(root.left)
+
+    return num
+
+#Task 6
+def level_sum(root):
+    if root==None:
+        return 0
+
+    return helper3(root,0)
+
+def helper3(root,lvl):
+    num=0
+    if root==None:
+        return 0
+    elif lvl%2==0:
+        num=-root.elem+helper3(root.left,lvl+1)+helper3(root.right,lvl+1)
+    else:
+        num=+root.elem+helper3(root.left,lvl+1)+helper3(root.right,lvl+1)
+    return num

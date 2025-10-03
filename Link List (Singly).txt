@@ -1,0 +1,94 @@
+Singly Link List(lab1)
+#Task 1
+def mergeSortedArray(arr1, arr2):
+    a=len(arr1)
+    b=len(arr2)
+    newarr=np.zeros(a+b,dtype=int)
+    for i in range(a):
+        newarr[i]=arr1[i]
+    for j in range(a,a+b):
+        newarr[j]=arr2[j-a]
+    for k in range(a+b):
+        for l in range(a+b-k-1):
+            if newarr[l]>=newarr[l+1]:
+                newarr[l],newarr[l+1]=newarr[l+1],newarr[l]
+    return(newarr)
+
+#task2
+def mostWater(arr):
+    arry=arr
+    h1=0
+    h2=0
+    hig=0
+    bot=0
+    res=0
+    final=0
+    for i in range(len(arry)-1):
+        h1=arry[i]
+        for j in range(i+1,len(arry)):
+            h2=arr[j]
+            if h2>=h1:
+                bot=h1
+            else:
+                bot=h2
+            dis=j-i
+            res=bot*dis
+
+            if final<res:
+                final=res
+
+    print(final)
+
+#Task3
+def check_similar(building_1, building_2):
+    h1=building_1
+    h2=building_2
+    res=""
+
+    while h1!=None and h2!=None:
+        if h1.elem!=h2.elem:
+            res="Not Similar"
+            return res
+
+        else:
+            h1=h1.next
+            h2=h2.next
+    if h1!=None and h2==None:
+            res= "Not Similar"
+            return res
+    if h1==None and h2!=None:
+            res= "Not Similar"
+            return res
+    res="similar"
+    return res
+
+#task4
+def assemble_conga_line(conga_line):
+    h1=conga_line
+    con=conga_line
+
+
+    while con.next!=None:
+        if con.elem>=con.next.elem:
+
+            return False
+        else:
+            con=con.next
+    return True
+
+#task5
+def sum_dist(head, arr):
+    sum=0
+    h1=head
+    ary=arr
+    l=len(ary)
+    count=0
+    for i in range(l):
+        for j in range(ary[i]+1):
+            if count==ary[i]:
+                sum+=int(h1.elem)
+            if h1!=None:
+                count+=1
+                h1=h1.next
+        count=0
+    return sum
